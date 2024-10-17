@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 import re
-from sqlalchemy import text
+from sqlalchemy import create_engine, text
 
 # Page heading
 st.markdown(
@@ -17,24 +17,32 @@ st.write('\n')
 
 # Initialize the SQLite database and create the table
 def init_db():
-    conn = st.connection("feedback_db", type="sql")
-    # Using text to explicitly declare SQL command
-    create_table_query = text('''
-        CREATE TABLE IF NOT EXISTS feedback (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            email TEXT NOT NULL,
-            message TEXT NOT NULL
-        )
-    ''')
-    conn.execute(create_table_query)
+    # Retrieve the database URL from secrets
+    db_url = st.secrets["connections"]["feedback_db"]["url"]  # Update to feedback_db
+    engine = create_engine(db_url)  # Use SQLAlchemy to create the engine
+
+    with engine.connect() as conn:
+        # Using text to explicitly declare SQL command
+        create_table_query = text('''
+            CREATE TABLE IF NOT EXISTS feedback (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                message TEXT NOT NULL
+            )
+        ''')
+        conn.execute(create_table_query)
 
 # Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
-    conn = st.connection("feedback_db", type="sql")
-    # Insert data using pandas
+    # Retrieve the database URL from secrets
+    db_url = st.secrets["connections"]["feedback_db"]["url"]  # Update to feedback_db
+    engine = create_engine(db_url)  # Use SQLAlchemy to create the engine
+    
     feedback_data = pd.DataFrame({"name": [name], "email": [email], "message": [message]})
-    feedback_data.to_sql("feedback", con=conn, if_exists="append", index=False)
+    
+    with engine.connect() as conn:
+        feedback_data.to_sql("feedback", con=conn, if_exists="append", index=False)
 
 # Function to validate email
 def validate_email(email):

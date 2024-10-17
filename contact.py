@@ -4,7 +4,7 @@ import re
 import os
 
 # Get the database path from Streamlit secrets
-db_path = st.secrets["sqlite"]["path"]
+db_path = st.secrets["sqlite"]
 
 # Function to initialize the SQLite database
 def init_db():

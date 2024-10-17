@@ -11,10 +11,9 @@ If you have any inquiries or would like to discuss potential projects, please fi
 st.write('\n')
 st.write('\n') 
 
-# Function to initialize the SQLite database
+# Initialize the SQLite database
 def init_db():
-    with sqlite3.connect(db_url.replace("sqlite:///", "")) as conn:
-        cursor = conn.cursor()
+    with conn.cursor() as cursor:
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS feedback (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -27,21 +26,7 @@ def init_db():
 
 # Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
-    try:
-        with sqlite3.connect(db_url.replace("sqlite:///", "")) as conn:
-            cursor = conn.cursor()
-            cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
-                           (name, email, message))
-            conn.commit()
-    except sqlite3.Error as e:
-        st.error(f"An error occurred: {e}")
-
-
-
-# Function to insert feedback into the SQLite database
-def insert_feedback(name, email, message):
-    with sqlite3.connect(db_url.replace("sqlite:///", "")) as conn:
-        cursor = conn.cursor()
+    with conn.cursor() as cursor:
         cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
                        (name, email, message))
         conn.commit()
@@ -50,7 +35,6 @@ def insert_feedback(name, email, message):
 def validate_email(email):
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
-
 
 # Create the form
 with st.form(key='feedback_form'):
@@ -72,5 +56,9 @@ with st.form(key='feedback_form'):
         else:
             insert_feedback(name, email, message)
             st.success("Thank you for your interest in connecting with us!")
+
+# Connect to the database using Streamlit's connection management
+conn = st.connection('feedback_db', type='sql')
+
 # Initialize the database
 init_db()

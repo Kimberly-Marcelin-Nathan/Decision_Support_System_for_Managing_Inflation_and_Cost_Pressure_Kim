@@ -5,8 +5,10 @@ import os
 
 # Function to initialize the SQLite database
 def init_db():
-    # The database name can be set to feedback.db, but ensure it's correctly defined
-    db_path = os.path.join(os.getcwd(), 'feedback.db')  # Ensure it's in the right location
+    # Set the path for the SQLite database
+    db_path = os.path.join(os.getcwd(), 'feedback.db')
+    
+    # Connect to the database and create the feedback table if it doesn't exist
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
         cursor.execute('''
@@ -22,6 +24,8 @@ def init_db():
 # Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
     db_path = os.path.join(os.getcwd(), 'feedback.db')
+    
+    # Connect to the database and insert feedback
     with sqlite3.connect(db_path) as conn:
         cursor = conn.cursor()
         cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
@@ -33,7 +37,7 @@ def validate_email(email):
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
 
-# Initialize the database
+# Initialize the database (Create the table if it does not exist)
 init_db()
 
 st.markdown(
@@ -63,5 +67,6 @@ with st.form(key='feedback_form'):
         elif not validate_email(email):
             st.error("Please enter a valid email address.")
         else:
+            # Insert feedback into the database
             insert_feedback(name, email, message)
             st.success("Thank you for your interest in connecting with us!")

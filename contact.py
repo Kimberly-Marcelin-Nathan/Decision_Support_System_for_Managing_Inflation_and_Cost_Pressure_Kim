@@ -9,28 +9,36 @@ def init_db():
     db_path = os.path.join(os.getcwd(), 'feedback.db')
     
     # Connect to the database and create the feedback table if it doesn't exist
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS feedback (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                email TEXT NOT NULL,
-                message TEXT NOT NULL
-            )
-        ''')
-        conn.commit()
+    try:
+        with sqlite3.connect(db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute('''
+                CREATE TABLE IF NOT EXISTS feedback (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    name TEXT NOT NULL,
+                    email TEXT NOT NULL,
+                    message TEXT NOT NULL
+                )
+            ''')
+            conn.commit()
+            st.write(f"Database created at: {db_path}")  # Debug line
+    except Exception as e:
+        st.error(f"Error creating database: {e}")  # Show error if any
 
 # Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
     db_path = os.path.join(os.getcwd(), 'feedback.db')
     
     # Connect to the database and insert feedback
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
-                       (name, email, message))
-        conn.commit()
+    try:
+        with sqlite3.connect(db_path) as conn:
+            cursor = conn.cursor()
+            cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
+                           (name, email, message))
+            conn.commit()
+            st.write("Feedback successfully stored!")  # Debug line
+    except Exception as e:
+        st.error(f"Error inserting feedback: {e}")  # Show error if any
 
 # Function to validate email
 def validate_email(email):

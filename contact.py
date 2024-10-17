@@ -11,9 +11,10 @@ If you have any inquiries or would like to discuss potential projects, please fi
 st.write('\n')
 st.write('\n') 
 
-# Initialize the SQLite database
+# Initialize and set up database connection
 def init_db():
-    with conn.cursor() as cursor:
+    with st.connection("feedback_db", type="sql") as conn:
+        cursor = conn.cursor()
         cursor.execute('''
             CREATE TABLE IF NOT EXISTS feedback (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -24,19 +25,20 @@ def init_db():
         ''')
         conn.commit()
 
-# Function to insert feedback into the SQLite database
+# Insert feedback into the database
 def insert_feedback(name, email, message):
-    with conn.cursor() as cursor:
+    with st.connection("feedback_db", type="sql") as conn:
+        cursor = conn.cursor()
         cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
                        (name, email, message))
         conn.commit()
 
-# Function to validate email
+# Email validation function
 def validate_email(email):
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
 
-# Create the form
+# Create and handle the form submission
 with st.form(key='feedback_form'):
     name = st.text_input("Name")
     email = st.text_input("Email")
@@ -54,11 +56,6 @@ with st.form(key='feedback_form'):
         elif not validate_email(email):
             st.error("Please enter a valid email address.")
         else:
+            init_db()  # Ensure the database is initialized
             insert_feedback(name, email, message)
             st.success("Thank you for your interest in connecting with us!")
-
-# Connect to the database using Streamlit's connection management
-conn = st.connection('feedback_db', type='sql')
-
-# Initialize the database
-init_db()

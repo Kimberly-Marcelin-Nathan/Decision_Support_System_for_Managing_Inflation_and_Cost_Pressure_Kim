@@ -22,9 +22,6 @@ def validate_email(email):
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
 
-# Initialize the database (ensure table is created)
-init_db()
-
 # Create the form
 with st.form(key='feedback_form'):
     name = st.text_input("Name")

@@ -7,3 +7,4 @@ tensorflow==2.13.0  # Downgrade to a compatible version
 st_pages==1.0.1
 statsmodels==0.13.2
 streamlit==1.37.1
+python==3.11.0

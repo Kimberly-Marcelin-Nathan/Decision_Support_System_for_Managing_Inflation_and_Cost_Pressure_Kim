@@ -4,4 +4,4 @@ Inflation and cost pressures pose significant challenges to economic stability. 
 
 # Minor Project | Decision Support System for Managing Inflation and Cost Pressure | Streamlit App Link
 
-🔗
+🔗https://kimberly-marcelin-nathan-decision-support-system-app.streamlit.app/

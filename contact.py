@@ -2,7 +2,7 @@ import streamlit as st
 
 import re
 import os
-import sqlite3 as sql
+import sqlite3
 
 import importlib
 

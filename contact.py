@@ -9,20 +9,6 @@ import importlib
 # Get the database path from Streamlit secrets
 db_path = st.secrets["sqlite"]
 
-# Function to initialize the SQLite database
-def init_db():
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        cursor.execute('''
-            CREATE TABLE IF NOT EXISTS feedback (
-                id INTEGER PRIMARY KEY AUTOINCREMENT,
-                name TEXT NOT NULL,
-                email TEXT NOT NULL,
-                message TEXT NOT NULL
-            )
-        ''')
-        conn.commit()
-
 # Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
     with sqlite3.connect(db_path) as conn:

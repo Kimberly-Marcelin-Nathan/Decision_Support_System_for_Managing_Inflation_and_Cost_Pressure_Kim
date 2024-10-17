@@ -1,10 +1,9 @@
+import os
 import streamlit as st
 import sqlite3
 import re
-import os
 
-
-# Adjust this path according to where feedback.db is located in your repository
+# Define the path to feedback.db in the current working directory
 db_path = os.path.join(os.getcwd(), 'feedback.db')
 
 # Function to initialize the SQLite database
@@ -34,17 +33,16 @@ def validate_email(email):
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
 
-# Initialize the database (Create the table if it does not exist)
+# Initialize the database
 init_db()
 
+# Streamlit UI
 st.markdown(
-    f"<h5 style='text-align: left; letter-spacing:1px;font-size: 23px;color: #3b3b3b;padding:0px'><i>Get In Touch!</i></h5><hr style='margin-top:15px; margin-bottom:10px'>", unsafe_allow_html=True)
-st.write("\n")
-st.write("""
-If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.
-""")
-st.write("\n")
-st.write("\n")
+        f"<h5 style='text-align: left; letter-spacing:1px;font-size: 23px;color: #3b3b3b;padding:0px'><i>Get In Touch!</i></h5><hr style='margin-top:15px; margin-bottom:10px'>", unsafe_allow_html=True)
+st.write('\n')
+st.write("""If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.""")
+st.write('\n')
+st.write('\n')
 
 # Create the form
 with st.form(key='feedback_form'):
@@ -64,6 +62,5 @@ with st.form(key='feedback_form'):
         elif not validate_email(email):
             st.error("Please enter a valid email address.")
         else:
-            # Insert feedback into the database
             insert_feedback(name, email, message)
             st.success("Thank you for your interest in connecting with us!")

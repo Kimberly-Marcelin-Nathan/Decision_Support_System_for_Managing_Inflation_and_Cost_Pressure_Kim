@@ -11,12 +11,23 @@ If you have any inquiries or would like to discuss potential projects, please fi
 st.write('\n')
 st.write('\n') 
 
-# Access the database URL from secrets
-db_url = st.secrets["db_url"]
-
 # Function to initialize the SQLite database
 def init_db():
-   try:
+    with sqlite3.connect(db_url.replace("sqlite:///", "")) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS feedback (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                message TEXT NOT NULL
+            )
+        ''')
+        conn.commit()
+
+# Function to insert feedback into the SQLite database
+def insert_feedback(name, email, message):
+    try:
         with sqlite3.connect(db_url.replace("sqlite:///", "")) as conn:
             cursor = conn.cursor()
             cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
@@ -24,6 +35,7 @@ def init_db():
             conn.commit()
     except sqlite3.Error as e:
         st.error(f"An error occurred: {e}")
+
 
 
 # Function to insert feedback into the SQLite database
@@ -60,3 +72,5 @@ with st.form(key='feedback_form'):
         else:
             insert_feedback(name, email, message)
             st.success("Thank you for your interest in connecting with us!")
+# Initialize the database
+init_db()

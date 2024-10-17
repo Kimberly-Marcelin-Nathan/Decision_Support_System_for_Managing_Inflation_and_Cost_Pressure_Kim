@@ -1,34 +1,49 @@
-import os
 import streamlit as st
-import pandas as pd
+import sqlite3
 import re
+import os
 
-# Define the path for the CSV file
-csv_path = os.path.join(os.getcwd(), 'feedback.csv')
+# Path to database file
+db_path = 'feedback.db'
 
-# Initialize CSV file with headers if it does not exist
-if not os.path.isfile(csv_path):
-    # Create the CSV file with headers
-    pd.DataFrame(columns=["name", "email", "message"]).to_csv(csv_path, index=False)
+st.markdown(
+        f"<h5 style='text-align: left; letter-spacing:1px;font-size: 23px;color: #3b3b3b;padding:0px'><i>Get In Touch!</i></h5><hr style='margin-top:15px; margin-bottom:10px'>", unsafe_allow_html=True)
+st.write('\n')
+st.write("""
+If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.
+""")
+st.write('\n')
+st.write('\n') 
 
-# Function to insert feedback into the CSV file
+# Function to initialize the SQLite database
+def init_db():
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS feedback (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                name TEXT NOT NULL,
+                email TEXT NOT NULL,
+                message TEXT NOT NULL
+            )
+        ''')
+        conn.commit()
+
+# Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
-    # Append the new data to the CSV
-    new_feedback = pd.DataFrame([[name, email, message]], columns=["name", "email", "message"])
-    new_feedback.to_csv(csv_path, mode='a', header=False, index=False)
+    with sqlite3.connect(db_path) as conn:
+        cursor = conn.cursor()
+        cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
+                       (name, email, message))
+        conn.commit()
 
 # Function to validate email
 def validate_email(email):
     email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
     return re.match(email_regex, email) is not None
 
-# Streamlit UI
-st.markdown(
-    f"<h5 style='text-align: left; letter-spacing:1px;font-size: 23px;color: #3b3b3b;padding:0px'><i>Get In Touch!</i></h5><hr style='margin-top:15px; margin-bottom:10px'>", unsafe_allow_html=True)
-st.write('\n')
-st.write("""If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.""")
-st.write('\n')
-st.write('\n')
+# Initialize the database (ensure table is created)
+init_db()
 
 # Create the form
 with st.form(key='feedback_form'):

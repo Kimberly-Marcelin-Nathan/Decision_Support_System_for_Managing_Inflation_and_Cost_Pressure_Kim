@@ -1,11 +1,11 @@
 import streamlit as st
-import sqlite3
 import re
+import pandas as pd
 
-# Initialize the SQLite database
+# Initialize the SQLite database (if necessary)
 def init_db():
     conn = st.connection('feedback_db', type='sql')
-    conn.execute('''
+    conn.session.execute('''
         CREATE TABLE IF NOT EXISTS feedback (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             name TEXT NOT NULL,
@@ -13,16 +13,17 @@ def init_db():
             message TEXT NOT NULL
         )
     ''')
-    conn.commit()
+    conn.session.commit()
 
 # Function to insert feedback into the SQLite database
 def insert_feedback(name, email, message):
     conn = st.connection('feedback_db', type='sql')
-    conn.execute(
-        'INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
-        (name, email, message)
-    )
-    conn.commit()
+    feedback_data = pd.DataFrame({
+        'name': [name],
+        'email': [email],
+        'message': [message]
+    })
+    feedback_data.to_sql('feedback', conn.session, if_exists='append', index=False)
 
 # Function to validate email
 def validate_email(email):

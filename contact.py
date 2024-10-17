@@ -3,17 +3,8 @@ import sqlite3
 import re
 import os
 
-# Path to database file
-db_path = 'feedback.db'
-
-st.markdown(
-        f"<h5 style='text-align: left; letter-spacing:1px;font-size: 23px;color: #3b3b3b;padding:0px'><i>Get In Touch!</i></h5><hr style='margin-top:15px; margin-bottom:10px'>", unsafe_allow_html=True)
-st.write('\n')
-st.write("""
-If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.
-""")
-st.write('\n')
-st.write('\n') 
+# Get the database path from Streamlit secrets
+db_path = st.secrets["sqlite"]["path"]
 
 # Function to initialize the SQLite database
 def init_db():

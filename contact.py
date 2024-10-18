@@ -63,7 +63,7 @@ mailchimp_form = '''
         }
 </style>
 <div id="mc_embed_signup">
-    <form action="https://jimkimproduction.us10.list-manage.com/subscribe/post?u=2c14052d630b9197b52a3dede&amp;id=0504edf4de&amp;f_id=00844be4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+    <form action="https://jimkimproduction.us10.list-manage.com/subscribe/post?u=2c14052d630b9197b52a3dede&amp;id=0504edf4de&amp;f_id=00844be4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
         <div id="mc_embed_signup_scroll">
             <h2>Talk to us!</h2>
             <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>

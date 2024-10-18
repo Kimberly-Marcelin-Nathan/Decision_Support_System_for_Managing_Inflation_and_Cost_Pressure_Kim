@@ -22,6 +22,10 @@ mailchimp_form = '''
             max-width: 600px;
             margin: 0 auto;
         }
+        #mc_embed_signup #mce-success-response {
+            color: #bb4cf6;
+            display: none;
+        }
         /* Adjust input field width for mobile */
         #mc_embed_signup input {
             width: 100%;
@@ -99,4 +103,4 @@ mailchimp_form = '''
 '''
 
 # Render the form using Streamlit's `st.components.v1.html` function
-st.components.v1.html(mailchimp_form, height=600)
+st.components.v1.html(mailchimp_form, height=630)

@@ -1,9 +1,4 @@
 import streamlit as st
-import sqlite3
-import re
-
-# Set database path
-db_path = st.secrets['sqlite']
 
 st.markdown(
     f"<h5 style='text-align: left; letter-spacing:1px;font-size: 23px;color: #3b3b3b;padding:0px'><i>Get In Touch!</i></h5><hr style='margin-top:15px; margin-bottom:10px'>", 
@@ -16,36 +11,40 @@ If you have any inquiries or would like to discuss potential projects, please fi
 st.write('\n')
 st.write('\n')
 
-# Function to insert feedback into the SQLite database
-def insert_feedback(name, email, message):
-    with sqlite3.connect(db_path) as conn:
-        cursor = conn.cursor()
-        cursor.execute('INSERT INTO feedback (name, email, message) VALUES (?, ?, ?)', 
-                       (name, email, message))
-        conn.commit()
+import streamlit as st
 
-# Function to validate email
-def validate_email(email):
-    email_regex = r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$'
-    return re.match(email_regex, email) is not None
+# Mailchimp form embedded as HTML
+mailchimp_form = '''
+<div id="mc_embed_shell">
+      <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
+  <style type="text/css">
+        #mc_embed_signup{background:#fff; false;clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
+        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
+           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+</style>
+<div id="mc_embed_signup">
+    <form action="https://jimkimproduction.us10.list-manage.com/subscribe/post?u=2c14052d630b9197b52a3dede&amp;id=0504edf4de&amp;f_id=00844be4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
+        <div id="mc_embed_signup_scroll"><h2>Talk to us!</h2>
+            <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+            <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div><div class="mc-field-group"><label for="mce-FNAME">Name <span class="asterisk">*</span></label><input type="text" name="FNAME" class="required text" id="mce-FNAME" required="" value=""></div><div class="mc-field-group"><label for="mce-PHONE">Phone Number </label><input type="text" name="PHONE" class="REQ_CSS" id="mce-PHONE" value=""></div><div class="mc-field-group"><label for="mce-MMERGE7">Message <span class="asterisk">*</span></label><input type="text" name="MMERGE7" class="required text" id="mce-MMERGE7" required="" value=""></div>
+        <div id="mce-responses" class="clear foot">
+            <div class="response" id="mce-error-response" style="display: none;"></div>
+            <div class="response" id="mce-success-response" style="display: none;"></div>
+        </div>
+    <div aria-hidden="true" style="position: absolute; left: -5000px;">
+        <input type="text" name="b_2c14052d630b9197b52a3dede_0504edf4de" tabindex="-1" value="">
+    </div>
+        <div class="optionalParent">
+            <div class="clear foot">
+                <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Submit">
+            </div>
+        </div>
+    </div>
+</form>
+</div>
+<script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
+<script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[4]='PHONE';ftypes[4]='phone';fnames[7]='MMERGE7';ftypes[7]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[5]='BIRTHDAY';ftypes[5]='birthday';fnames[6]='NAME';ftypes[6]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+'''
 
-# Create the form
-with st.form(key='feedback_form'):
-    name = st.text_input("Name")
-    email = st.text_input("Email")
-    message = st.text_area("Message")
-    submit_button = st.form_submit_button("Submit")
-
-    if submit_button:
-        # Perform validation
-        if not name:
-            st.error("Name is required.")
-        elif not email:
-            st.error("Email is required.")
-        elif not message:
-            st.error("Message is required.")
-        elif not validate_email(email):
-            st.error("Please enter a valid email address.")
-        else:
-            insert_feedback(name, email, message)
-            st.success("Thank you for your interest in connecting with us!")
+# Render the form using Streamlit's `st.components.v1.html` function
+st.components.v1.html(mailchimp_form, height=600)

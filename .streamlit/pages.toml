@@ -1,0 +1,41 @@
+[[pages]]
+path = "overview.py"
+name = "Overview"
+icon = "🏡"
+
+[[pages]]
+path = "model_validation.py"
+name = "Model Validation"
+icon = "✅"
+
+[[pages]]
+path = "forecast_cpi.py"
+name = "Short-Term CPI Forecasting"
+icon = "📊"
+
+[[pages]]
+path = "forecast_cpi_l.py"
+name = "Long-Term CPI Forecasting"
+icon = "🚀"
+
+[[pages]]
+path = "cpi_percent_change.py"
+name = "Monthly CPI Trends"
+icon = "📈"
+
+[[pages]]
+path = "cpi_percent_change_y.py"
+name = "Yearly CPI Trends"
+icon = "📉"
+
+[[pages]]
+path = "contact.py"
+name = "Contact Us"
+icon = "📩"
+
+
+[theme]
+base="light"
+primaryColor="#C982EF"
+textColor="#3b3b3b"
+font = "sans serif"

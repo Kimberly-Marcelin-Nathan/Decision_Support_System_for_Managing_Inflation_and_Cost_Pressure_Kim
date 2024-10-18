@@ -8,8 +8,6 @@ st.write('\n')
 st.write("""
 If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.
 """)
-st.write('\n')
-st.write('\n')
 
 import streamlit as st
 
@@ -42,7 +40,7 @@ mailchimp_form = '''
         }
         /* Make the submit button responsive */
         #mc_embed_signup .button {
-            width: 100%;
+            width: 50%;
             padding: 10px;
             font-size: 16px;
             background-color: #bb4cf6;
@@ -105,4 +103,4 @@ mailchimp_form = '''
 '''
 
 # Render the form using Streamlit's `st.components.v1.html` function
-st.components.v1.html(mailchimp_form, height=800)
+st.components.v1.html(mailchimp_form, height=500)

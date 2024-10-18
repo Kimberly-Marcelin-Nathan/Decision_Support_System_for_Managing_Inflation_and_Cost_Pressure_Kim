@@ -14,37 +14,88 @@ st.write('\n')
 import streamlit as st
 
 # Mailchimp form embedded as HTML
+import streamlit as st
+
+# Mailchimp form embedded as HTML with responsive CSS
 mailchimp_form = '''
 <div id="mc_embed_shell">
       <link href="//cdn-images.mailchimp.com/embedcode/classic-061523.css" rel="stylesheet" type="text/css">
   <style type="text/css">
-        #mc_embed_signup{background:#fff; false;clear:left; font:14px Helvetica,Arial,sans-serif; width: 600px;}
-        /* Add your own Mailchimp form style overrides in your site stylesheet or in this style block.
-           We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+        #mc_embed_signup {
+            background:#fff;
+            clear:left;
+            font:14px Helvetica,Arial,sans-serif;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        /* Adjust input field width for mobile */
+        #mc_embed_signup input {
+            width: 100%;
+            box-sizing: border-box;
+        }
+        #mc_embed_signup_scroll {
+            padding: 10px;
+        }
+        /* Make the submit button responsive */
+        #mc_embed_signup .button {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        /* Add some responsiveness */
+        @media only screen and (max-width: 600px) {
+            #mc_embed_signup {
+                padding: 0 20px;
+            }
+            #mc_embed_signup h2 {
+                font-size: 20px;
+            }
+        }
 </style>
 <div id="mc_embed_signup">
     <form action="https://jimkimproduction.us10.list-manage.com/subscribe/post?u=2c14052d630b9197b52a3dede&amp;id=0504edf4de&amp;f_id=00844be4f0" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank">
-        <div id="mc_embed_signup_scroll"><h2>Talk to us!</h2>
+        <div id="mc_embed_signup_scroll">
+            <h2>Talk to us!</h2>
             <div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
-            <div class="mc-field-group"><label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label><input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value=""></div><div class="mc-field-group"><label for="mce-FNAME">Name <span class="asterisk">*</span></label><input type="text" name="FNAME" class="required text" id="mce-FNAME" required="" value=""></div><div class="mc-field-group"><label for="mce-PHONE">Phone Number </label><input type="text" name="PHONE" class="REQ_CSS" id="mce-PHONE" value=""></div><div class="mc-field-group"><label for="mce-MMERGE7">Message <span class="asterisk">*</span></label><input type="text" name="MMERGE7" class="required text" id="mce-MMERGE7" required="" value=""></div>
+            <div class="mc-field-group">
+                <label for="mce-EMAIL">Email Address <span class="asterisk">*</span></label>
+                <input type="email" name="EMAIL" class="required email" id="mce-EMAIL" required="" value="">
+            </div>
+            <div class="mc-field-group">
+                <label for="mce-FNAME">Name <span class="asterisk">*</span></label>
+                <input type="text" name="FNAME" class="required text" id="mce-FNAME" required="" value="">
+            </div>
+            <div class="mc-field-group">
+                <label for="mce-PHONE">Phone Number</label>
+                <input type="text" name="PHONE" class="REQ_CSS" id="mce-PHONE" value="">
+            </div>
+            <div class="mc-field-group">
+                <label for="mce-MMERGE7">Message <span class="asterisk">*</span></label>
+                <input type="text" name="MMERGE7" class="required text" id="mce-MMERGE7" required="" value="">
+            </div>
         <div id="mce-responses" class="clear foot">
-            <div class="response" id="mce-error-response" style="display: none;"></div>
-            <div class="response" id="mce-success-response" style="display: none;"></div>
+            <div class="response" id="mce-error-response" style="display:none;"></div>
+            <div class="response" id="mce-success-response" style="display:none;"></div>
         </div>
-    <div aria-hidden="true" style="position: absolute; left: -5000px;">
-        <input type="text" name="b_2c14052d630b9197b52a3dede_0504edf4de" tabindex="-1" value="">
-    </div>
+        <div aria-hidden="true" style="position:absolute; left:-5000px;">
+            <input type="text" name="b_2c14052d630b9197b52a3dede_0504edf4de" tabindex="-1" value="">
+        </div>
         <div class="optionalParent">
             <div class="clear foot">
                 <input type="submit" name="subscribe" id="mc-embedded-subscribe" class="button" value="Submit">
             </div>
         </div>
     </div>
-</form>
+    </form>
 </div>
 <script type="text/javascript" src="//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js"></script>
-<script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[4]='PHONE';ftypes[4]='phone';fnames[7]='MMERGE7';ftypes[7]='text';fnames[2]='LNAME';ftypes[2]='text';fnames[3]='ADDRESS';ftypes[3]='address';fnames[5]='BIRTHDAY';ftypes[5]='birthday';fnames[6]='NAME';ftypes[6]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+<script type="text/javascript">(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[4]='PHONE';ftypes[4]='phone';fnames[7]='MMERGE7';ftypes[7]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 '''
 
 # Render the form using Streamlit's `st.components.v1.html` function
-st.components.v1.html(mailchimp_form, height=600)
+st.components.v1.html(mailchimp_form, height=800)

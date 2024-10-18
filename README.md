@@ -1,0 +1,7 @@
+# Decision_Support_System_for_Managing_Inflation_and_Cost_Pressure_Kim
+
+Inflation and cost pressures pose significant challenges to economic stability. To address these issues, a Decision Support System (DSS) has been developed that leverages Consumer Price Index (CPI) data for real-time and predictive economic insights. This system is designed for stakeholders such as the Ministry of Statistics and Programme Implementation (MoSPI), National Statistical Office (NSO), and Central Statistical Office (CSO). Employing advanced forecasting models, including ARIMA, SARIMA, and LSTM, the DSS predicts CPI trends across diverse sectors in India. It integrates comprehensive CPI datasets, ensures data consistency through preprocessing, and conducts temporal analysis for deeper insights. By utilizing machine learning algorithms, the system delivers robust forecasts of CPI variations, empowering informed decision-making. Interactive visualizations created with Streamlit allow users to explore monthly and yearly CPI trends, model validation metrics, and compare forecasting performances. A feedback mechanism further enhances user interaction and system adaptability. Ultimately, this DSS provides a comprehensive, user-friendly tool for managing inflation and supporting economic stability in an ever-changing landscape.
+
+# Minor Project | Decision Support System for Managing Inflation and Cost Pressure | Streamlit App Link
+
+🔗https://kimberly-marcelin-nathan-decision-support-system-app.streamlit.app/

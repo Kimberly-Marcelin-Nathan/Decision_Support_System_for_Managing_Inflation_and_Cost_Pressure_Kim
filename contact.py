@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 # Set up Mailchimp API details
-API_KEY = '692dbd2ef3fcffca57da0e365c4b10be-us10'
+API_KEY = st.secrets["mailchimp"]["api_key"]
 LIST_ID = '0504edf4de'
 MAILCHIMP_DATA_CENTER = 'us10'  # replace with your data center, e.g., us1, us2, etc.
 

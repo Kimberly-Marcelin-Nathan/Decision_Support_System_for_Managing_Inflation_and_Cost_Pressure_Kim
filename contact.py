@@ -85,8 +85,7 @@ mailchimp_form = '''
             </div>
         <div id="mce-responses" class="clear foot">
             <div class="response" id="mce-error-response" style="display:none;"></div>
-            <div class="response" id="mce-success-response" style="display:none;"></div>
-            <div class="response" id="mce-success-response" style="display: block;">Thank you for Submitting!</div>
+            <div class="response" id="mce-success-response" style="display:none;"></div>            
         </div>
         
         <div aria-hidden="true" style="position:absolute; left:-5000px;">

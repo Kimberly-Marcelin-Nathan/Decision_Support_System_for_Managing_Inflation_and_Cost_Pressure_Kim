@@ -9,11 +9,6 @@ st.write("""
 If you have any inquiries or would like to discuss potential projects, please fill out the contact form below.
 """)
 
-import streamlit as st
-
-# Mailchimp form embedded as HTML
-import streamlit as st
-
 # Mailchimp form embedded as HTML with responsive CSS
 mailchimp_form = '''
 <div id="mc_embed_shell">
@@ -30,6 +25,7 @@ mailchimp_form = '''
         /* Adjust input field width for mobile */
         #mc_embed_signup input {
             width: 100%;
+            height: 50px;
             box-sizing: border-box;
         }
         #mc_embed_signup_scroll {
@@ -103,4 +99,4 @@ mailchimp_form = '''
 '''
 
 # Render the form using Streamlit's `st.components.v1.html` function
-st.components.v1.html(mailchimp_form, height=500)
+st.components.v1.html(mailchimp_form, height=600)

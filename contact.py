@@ -37,16 +37,23 @@ mailchimp_form = '''
         #mc_embed_signup_scroll {
             padding: 10px;
         }
+        #mc_embed_signup .button:hover {
+            background-color: #c982ef;
+        }
         /* Make the submit button responsive */
         #mc_embed_signup .button {
             width: 100%;
             padding: 10px;
             font-size: 16px;
-            background-color: #007BFF;
+            background-color: #bb4cf6;
             color: white;
+            height: 52px;
             border: none;
             cursor: pointer;
         }
+        #mc_embed_signup div#mce-responses {
+            margin: 10px 5%;
+        }    
         /* Add some responsiveness */
         @media only screen and (max-width: 600px) {
             #mc_embed_signup {

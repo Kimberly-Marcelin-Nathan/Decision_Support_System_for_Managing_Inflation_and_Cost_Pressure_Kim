@@ -1,7 +1,7 @@
 numpy
 pandas
 plotly
-pmdarima==1.8.2
+pmdarima
 scikit-learn
 tensorflow
 st_pages
